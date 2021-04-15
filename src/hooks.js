@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import axios from 'axios';
+import uuid from 'uuid';
 
 function useFlip(initialVal = false) {
   // call useState, "reserve piece of state"
@@ -11,4 +13,15 @@ function useFlip(initialVal = false) {
   return [isFacingUp, toggle];
 }
 
-export { useFlip };
+const useAxios = (url) => {
+  const [data, setData] = useState([]);
+
+  const addData = async () => {
+    const res = await axios.get(url);
+    setData((oldData) => [...oldData, { ...res.data, id: uuid() }]);
+  };
+
+  return [data, addData];
+};
+
+export { useFlip, useAxios };
