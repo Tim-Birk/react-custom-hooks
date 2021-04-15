@@ -13,11 +13,11 @@ function useFlip(initialVal = false) {
   return [isFacingUp, toggle];
 }
 
-const useAxios = (url) => {
+const useAxios = (baseUrl) => {
   const [data, setData] = useState([]);
 
-  const addData = async () => {
-    const res = await axios.get(url);
+  const addData = async (baseUrl, restOfUrl) => {
+    const res = await axios.get(restOfUrl ? `${baseUrl}${restOfUrl}` : baseUrl);
     setData((oldData) => [...oldData, { ...res.data, id: uuid() }]);
   };
 
